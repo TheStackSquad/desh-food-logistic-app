@@ -1,0 +1,7 @@
+.container {
+  width: 100%;
+  background: linear-gradient(135deg, #f0f4ff, #dfefff, #ffffff);
+  /* Optional: Add padding for spacing or additional styling */
+  padding: 20px;
+  border-radius: 8px; /* Optional: Rounded corners */
+}

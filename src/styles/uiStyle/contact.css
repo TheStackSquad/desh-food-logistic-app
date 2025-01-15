@@ -1,0 +1,8 @@
+.imagegrid{
+    width: 100%;
+    height: 50px;
+}
+.userImages{
+    border-radius: 50%;
+    gap: .5rem;
+}

@@ -1,0 +1,8 @@
+.section1{
+    background-image: url(/uploads/coverImages/foodbackground5.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
