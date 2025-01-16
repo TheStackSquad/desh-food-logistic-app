@@ -5,7 +5,6 @@ import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import FormInput from '@/components/ui/FormInput';
-import '@/styles/uiStyle/login_form.css';
 
 const RegistrationForm = () => {
   const router = useRouter();

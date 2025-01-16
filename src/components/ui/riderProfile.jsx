@@ -10,8 +10,7 @@ import { vendorProfileSchema,
  } from '@/schema/clientSchemas/vendorProfileSchema';
 import { updateVendorProfile } from '@/reduxStore/actions/vendorActions';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import "@/styles/uiStyle/profile.css";
+import Image from 'next/image'
 
 export default function ProfileUI() {
   const dispatch = useDispatch();
