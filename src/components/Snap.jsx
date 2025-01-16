@@ -5,7 +5,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { vendorData } from '@/components/objects/vendorData';
-import '@/styles/home.css';
 
 export default function Snap() {
   const [activeIndex, setActiveIndex] = useState(0);

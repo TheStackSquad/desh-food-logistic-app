@@ -6,7 +6,7 @@ import { checkoutSchema } from '@/schema/clientSchemas/checkoutSchema';
 import { FaRegCreditCard, FaEye, FaEyeSlash, FaCamera } from 'react-icons/fa';
 import Image from 'next/image';
 import { getPaymentGateways, getAttributions } from '@/config/paymentGateway';
-import '@/styles/uiStyle/payment.css';
+
 
 const PaymentUI = () => {
   const [showSecurityCode, setShowSecurityCode] = useState(false);

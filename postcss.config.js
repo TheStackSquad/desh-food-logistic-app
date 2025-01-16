@@ -2,6 +2,11 @@
 const config = {
   plugins: {
     tailwindcss: {},
+    'postcss-critical-css': {
+      outputPath: './public/css/',
+    },
+    autoprefixer: {},
+    cssnano: { preset: 'default' },
   },
 };
 

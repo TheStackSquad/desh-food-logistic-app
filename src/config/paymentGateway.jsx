@@ -4,22 +4,22 @@ const developmentGateways = [
     {
       id: 'visa',
       name: 'Visa',
-      imagePath: '/images/placeholderImage/visacard.png',
+      imagePath: '/uploads/placeholderImage/visacard.png',
     },
     {
       id: 'mastercard',
       name: 'Mastercard',
-      imagePath: '/images/placeholderImage/mastercard.png',
+      imagePath: '/uploads/placeholderImage/mastercard.png',
     },
     {
       id: 'paypal',
       name: 'PayPal',
-      imagePath: '/images/placeholderImage/paypal.png',
+      imagePath: '/uploads/placeholderImage/paypal.png',
     },
     {
       id: 'applepay',
       name: 'Apple Pay',
-      imagePath: '/images/placeholderImage/apple-pay.png',
+      imagePath: '/uploads/placeholderImage/apple-pay.png',
     }
   ];
   

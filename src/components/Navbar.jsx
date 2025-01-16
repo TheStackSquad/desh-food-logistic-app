@@ -1,23 +1,21 @@
-//src/compponents/Navbar.js
+//src/components/Navbar.js
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import navItems from "@/components/objects/uiData";
 import { navVariants, menuVariants } from "@/components/motion/dropdown";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import "@/styles/componentStyle/Header.css";
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const dropdownRef = useRef(null); // Reference to the dropdown
+  const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -35,102 +33,79 @@ const Header = () => {
   }, [isOpen]);
 
   return (
-    <div className="header">
-      <div className="nav-container">
-        {/* Logo and top navigation wrapper */}
-        <div className="nav-wrapper">
-          <Link href="/" className="logo">
+    <div className="header bg-transparent">
+      <div className="header-container nav-container bg-transparent">
+        <div className="nav-wrapper flex items-center gap-4">
+          <Link href="/" className="logo text-lg font-bold border border-gray-300 rounded-lg px-3 py-1 shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
             devKitchen
           </Link>
-
-          {/* Icons container for mobile menu and cart */}
-          <div className="icons-container">
-            {/* Mobile menu toggle button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="mobile-menu-btn"
-              aria-label="Toggle mobile menu"
-            >
-              <svg
-                className="menu-icon"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-            {/* Shopping cart link */}
-            <div className="cart-icon">
-              <Link href="/Checkout">
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  size="20px"
-                  style={{ cursor: "pointer" }}
-                />
-              </Link>
-            </div>
-          </div>
         </div>
 
-        {/* Mobile dropdown menu with animation */}
-        <motion.div
-          initial="closed"
-          animate={isOpen ? "open" : "closed"}
-          variants={menuVariants}
-          className="mobile-dropdown"
-          ref={dropdownRef} // Attach the ref to the dropdown
-        >
-          <motion.div variants={navVariants} className="mobile-nav-links">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                className={`mobile-nav-link ${
-                  pathname === item.path ? "active" : ""
-                }`}
-                onClick={() => setIsOpen(false)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <span
-                  style={{
-                    color: item.color,
-                    fontSize: "20px",
-                    marginRight: "8px",
-                  }}
-                >
-                  <Image
-                    src={item.icon.dev}
-                    alt={`${item.name} icon`}
-                    width={20}
-                    height={20}
-                  />
-                </span>
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </motion.div>
-        </motion.div>
+        <div className="icons-container flex items-center gap-4">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="mobile-menu-btn text-gray-700 hover:text-gray-900 focus:outline-none focus:ring focus:ring-gray-300"
+            aria-label="Toggle mobile menu"
+          >
+            <svg
+              className="menu-icon h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {isOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+
+          <div className="cart-icon">
+            <Link href="/Checkout">
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                size="lg"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
+              />
+            </Link>
+          </div>
+        </div>
       </div>
+
+      <motion.div
+        initial="closed"
+        animate={isOpen ? "open" : "closed"}
+        variants={menuVariants}
+        className="mobile-dropdown bg-white shadow-lg rounded-lg p-4 absolute right-4 top-16 w-64 z-50"
+        ref={dropdownRef}
+      >
+        <motion.div variants={navVariants} className="mobile-nav-links space-y-2">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.path}
+              className={`mobile-nav-link flex items-center justify-start gap-2 text-gray-700 hover:text-blue-500 transition-colors ${pathname === item.path ? "font-bold" : ""}`}
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="text-lg" style={{ color: item.color }}>
+                {item.icon.dev}
+              </span>
+              <span>{item.name}</span>
+            </Link>
+          ))}
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

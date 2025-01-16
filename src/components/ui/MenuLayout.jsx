@@ -17,7 +17,6 @@ import { Select,
   SelectTrigger,
   SelectValue } from '@/components/ui/Select';
 
-  import '@/styles/uiStyle/menu.css';
 
 // Vendor types constant
 const VENDOR_TYPES = [

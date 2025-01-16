@@ -5,16 +5,16 @@ import { motion } from "framer-motion";
 import { User, Mail, Phone, ChevronRight } from "lucide-react";
 import { fadeIn, slideUp } from "@/components/motion/animations";
 import ChatWidget from "@/components/chatWidget";
-import "@/styles/uiStyle/contact.css";
+
 
 // Image Import & Object
 const userImages = {
-  user1: { src: "/images/contact/user1.webp", alt: "User 1" },
-  user2: { src: "/images/contact/user2.webp", alt: "User 2" },
-  user3: { src: "/images/contact/user3.webp", alt: "User 3" },
-  user4: { src: "/images/contact/user4.webp", alt: "User 4" },
-  user5: { src: "/images/contact/user5.webp", alt: "User 5" },
-  menuBook: { src: "/images/contact/menu-book.png", alt: "Menu Book" },
+  user1: { src: "/uploads/contact/user1.webp", alt: "User 1" },
+  user2: { src: "/uploads/contact/user2.webp", alt: "User 2" },
+  user3: { src: "/uploads/contact/user3.webp", alt: "User 3" },
+  user4: { src: "/uploads/contact/user4.webp", alt: "User 4" },
+  user5: { src: "/uploads/contact/user5.webp", alt: "User 5" },
+  menuBook: { src: "/uploads/contact/menu-book.png", alt: "Menu Book" },
 };
 
 const ImageLoader = ({ src, alt, width, height, className }) => (

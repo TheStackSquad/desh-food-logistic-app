@@ -11,7 +11,7 @@ import { vendorProfileSchema,
 import { updateVendorProfile } from '@/reduxStore/actions/vendorActions';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import "@/styles/uiStyle/profile.css";
+
 
 export default function VendorProfileLayout() {
   const dispatch = useDispatch();
