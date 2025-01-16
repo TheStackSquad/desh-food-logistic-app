@@ -44,7 +44,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
-    turbo: true,
+// turbo: true,
     optimizeCss: true,
   },
 
