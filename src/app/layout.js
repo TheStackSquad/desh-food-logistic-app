@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import ClientProviders from '@/app/ClientProviders';
 import Header from '@/components/Navbar';
-import './globals.css';
+import '@/app/globals.css';
 
 // Metadata for SEO and Social Media
 export const metadata = {
