@@ -68,7 +68,7 @@ const ContactLayout = () => {
           <div className="space-y-2 mb-6">
             <p className="text-lg font-medium">Urgently want to reach us?</p>
             <p className="text-gray-600">
-              We're available 9 am - 11 pm WAT
+              We are available 9 am - 11 pm WAT
               <br />
               Seven days a week. (And we respond within 5 mins!)
             </p>

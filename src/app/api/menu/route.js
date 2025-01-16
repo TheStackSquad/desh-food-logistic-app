@@ -1,5 +1,7 @@
 // src/app/api/Menu/route.js
 import { NextResponse } from 'next/server';
+import { Meal } from '@/schema/models/vendorSchemas/Meal';
+import User from '@/schema/models/User';
 
 // GET handler for fetching meals
 export async function GET(request) {

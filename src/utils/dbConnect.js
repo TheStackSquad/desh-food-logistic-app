@@ -19,7 +19,7 @@ let isConnected = false;
 async function dbConnect() {
   // Reuse existing connection if available
   if (isConnected) {
-    console.log('Using existing database connection');
+//    console.log('Using existing database connection');
     return;
   }
 
@@ -37,7 +37,7 @@ async function dbConnect() {
     const db = await mongoose.connect(MONGODB_URI, connectionOptions);
     
     isConnected = true;
-    console.log('Database connected successfully');
+  //  console.log('Database connected successfully');
     return db;
 
   } catch (error) {
@@ -53,7 +53,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose.connection.on('disconnected', () => {
-  console.log('MongoDB disconnected');
+//  console.log('MongoDB disconnected');
   isConnected = false;  // Reset connection status on disconnect
 });
 

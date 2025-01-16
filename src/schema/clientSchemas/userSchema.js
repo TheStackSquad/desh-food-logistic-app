@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 
 // Console log for debugging schema initialization
-console.log('Initializing validation schema');
+// console.log('Initializing validation schema');
 
 export const userSchema = Yup.object().shape({
   username: Yup.string()
@@ -48,13 +48,13 @@ export const userSchema = Yup.object().shape({
 
 // Debug function to test validation
 export const validateField = async (fieldName, value) => {
-  console.log(`Validating field: ${fieldName} with value:`, value);
+//  console.log(`Validating field: ${fieldName} with value:`, value);
   try {
     await userSchema.validateAt(fieldName, { [fieldName]: value });
-    console.log(`Validation passed for ${fieldName}`);
+  //  console.log(`Validation passed for ${fieldName}`);
     return { isValid: true };
   } catch (error) {
-    console.log(`Validation failed for ${fieldName}:`, error.message);
+  //  console.log(`Validation failed for ${fieldName}:`, error.message);
     return { isValid: false, error: error.message };
   }
 };

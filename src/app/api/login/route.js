@@ -6,20 +6,20 @@ import { compare } from 'bcryptjs';
 import { generateTokens } from '@/utils/jwt';
 
 export async function POST(request) {
-  console.log('Login API route hit');
+//  console.log('Login API route hit');
 
   try {
     await dbConnect();
     const body = await request.json();
     const { username, password } = body;
 
-    console.log('Login attempt for username:', username);
+//    console.log('Login attempt for username:', username);
 
     // Find user by username
     const user = await User.findOne({ username }).select('+password');
     
     if (!user) {
-      console.log('User not found');
+//      console.log('User not found');
       return NextResponse.json(
         { success: false, message: 'Invalid credentials' },
         { status: 401 }
@@ -30,7 +30,7 @@ export async function POST(request) {
     const isPasswordValid = await compare(password, user.password);
     
     if (!isPasswordValid) {
-      console.log('Invalid password');
+//      console.log('Invalid password');
       return NextResponse.json(
         { success: false, message: 'Invalid credentials' },
         { status: 401 }
@@ -51,7 +51,7 @@ export async function POST(request) {
       profilePic: user.profilePic || 'default-profile-pic.webp'
     };
 
-    console.log('Login successful for user:', userData._id);
+//    console.log('Login successful for user:', userData._id);
 
     return NextResponse.json({
       success: true,

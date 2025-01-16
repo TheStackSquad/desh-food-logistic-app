@@ -15,9 +15,8 @@ import Image from 'next/image'
 export default function ProfileUI() {
   const dispatch = useDispatch();
   const { vendorData, isAuthenticated } = useSelector(state => state.vendor);
-  console.log('isAuthenticated:', isAuthenticated);
+//  console.log('isAuthenticated:', isAuthenticated);
   const [profilePreview, setProfilePreview] = useState(null);
-  const [coverPreview, setCoverPreview] = useState(null);
   const [uploadStatus, setUploadStatus] = useState({
     profile: null, // 'success' | 'error' | null
     cover: null
@@ -44,9 +43,6 @@ export default function ProfileUI() {
       if (type === 'profile') {
         setProfilePreview(reader.result);
         setUploadStatus(prev => ({ ...prev, profile: 'success' }));
-      } else {
-        setCoverPreview(reader.result);
-        setUploadStatus(prev => ({ ...prev, cover: 'success' }));
       }
     };
     reader.onerror = () => {
@@ -65,9 +61,7 @@ export default function ProfileUI() {
 
     // Add files if they exist
     const profileFile = watch('profilePic')?.[0];
-    const coverFile = watch('coverImage')?.[0];
     if (profileFile) formData.append('profilePic', profileFile);
-    if (coverFile) formData.append('coverImage', coverFile);
 
     try {
       const response = await fetch('/api/vendorProfile', {
@@ -120,38 +114,6 @@ export default function ProfileUI() {
   </div>
 </motion.div>
 
-{/* Cover Image Upload */}
-<motion.div 
-  whileHover={{ scale: 1.02 }}
-  className={`relative w-full h-48 rounded-lg overflow-hidden border-2 ${
-    uploadStatus.cover === 'success' ? 'border-green-500' :
-    uploadStatus.cover === 'error' ? 'border-red-500' :
-    'border-gray-300'
-  }`}
->
-  {coverPreview && (
- <Image 
- src={coverPreview} 
- alt="Profile preview" 
- className="w-full h-full object-cover"
- layout="fill"
- objectFit="cover"
- quality={75}
- priority 
-/>
-  )}
-  <input
-    type="file"
-    accept="image/*"
-    {...register('coverImage')}
-    onChange={(e) => handleImageChange(e, 'cover')}
-    className="absolute inset-0 opacity-0 cursor-pointer z-10"
-  />
-   <div className="w-100 absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-white transition-opacity hover:bg-opacity-70">
-    <FaCamera className="text-3xl mb-2" />
-    <span className="text-sm font-medium">Upload Cover Image</span>
-  </div>
-</motion.div>
 
         {/* Form Fields */}
         <div className="space-y-4">

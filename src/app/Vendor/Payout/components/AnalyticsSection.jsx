@@ -4,6 +4,7 @@
 'use client';
 
 import { useState } from 'react';
+//eslint-disable-next-line
 import { ShoppingBag, Users, MapPin, Star } from "lucide-react";
 import AnalyticsCard from "./AnalyticsCard";
 

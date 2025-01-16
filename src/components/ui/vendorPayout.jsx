@@ -5,13 +5,14 @@ import Image from "next/image";
 import { 
   Wallet, LogOut, Clock, ShoppingBag, Star, 
   MapPin, TrendingUp, Users, ChevronRight,
-  BarChart2, PieChart, Activity
+  Activity
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function VendorPayout() {
+  //eslint-disable-next-line
   const [currentTime, setCurrentTime] = useState(() =>
     new Date().toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -38,6 +39,14 @@ export default function VendorPayout() {
     setIsExpanded(!isExpanded);
   };
 
+  const handleLogout = () => {
+    //logout logic
+  };
+
+  const handlePayout = () => {
+    //logout logic
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="payoutGrid max-w-7xl mx-auto space-y-6">
@@ -55,6 +64,7 @@ export default function VendorPayout() {
                 priority
               />
             </div>
+
             <div>
               <h2 className="text-2xl font-bold text-gray-800">
                 Vendor Dashboard
@@ -65,6 +75,7 @@ export default function VendorPayout() {
                 <span className="ml-2">{new Date().toLocaleDateString()}</span>
               </div>
             </div>
+
           </div>
           <Button
             variant="outline"

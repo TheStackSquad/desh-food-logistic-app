@@ -5,7 +5,7 @@ import { writeFile } from 'fs/promises';
 import path from 'path';
 
 // Helper function to save uploaded files
-const saveFile = async (file, _type) => {
+const saveFile = async (file) => {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const filename = `${Date.now()}-${file.name}`;

@@ -1,24 +1,30 @@
-// src/components/uiStyle/MenuLayout.jsx
+// src/components/ui/MenuLayout.jsx
 'use client';
 
-import React, { useState, useCallback } from 'react';
+// Core React and Redux imports
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toggleRecent } from '@/reduxStore/actions/authActions';
+
+// UI Component imports
 import { Heart, ShoppingCart } from 'lucide-react';
 import { toast } from 'react-toastify';
-import Image from "next/image";
-
-import { Card,
+import Image from 'next/image';
+import {
+  Card,
   CardContent,
-  CardHeader } from '@/components/ui/Card';
-
-import { Select,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/Card';
+import {
+  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue } from '@/components/ui/Select';
+  SelectValue,
+} from '@/components/ui/Select';
 
-
-// Vendor types constant
+// Constants
 const VENDOR_TYPES = [
   { value: 'all', label: 'All Vendors' },
   { value: 'Ice Cream', label: 'Ice Cream' },
@@ -28,117 +34,146 @@ const VENDOR_TYPES = [
   { value: 'Bakery Delight', label: 'Bakery Delight' },
 ];
 
+// Custom hook for fetching meals
 const useMeals = (selectedType) => {
   const [state, setState] = useState({
     meals: [],
     loading: false,
-    error: null
+    error: null,
   });
 
+  // Fetch meals from API
   const fetchMeals = useCallback(async () => {
-    setState(prev => ({ ...prev, loading: true }));
+    setState((prev) => ({ ...prev, loading: true }));
     try {
       const response = await fetch(`/api/Menu?category=${selectedType}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       setState({ meals: data, loading: false, error: null });
     } catch (error) {
-      setState(prev => ({
+      console.error(error);
+      setState((prev) => ({
         ...prev,
         error: 'Failed to load meals',
-        loading: false
+        loading: false,
       }));
     }
   }, [selectedType]);
-
-  return { ...state, fetchMeals };
+  
+  // Trigger fetch on type change
+  useEffect(() => {
+    fetchMeals();
+  }, [fetchMeals]);
+  
+  return state;
 };
 
+// Meal Card Component
+const MealCard = ({ meal, onLike, isLiked, isPending, onAddToCart }) => (
+  <Card className="card-menu group relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <div className="card-menu relative h-48 w-full overflow-hidden">
+      <Image
+        src={meal.image}
+        alt={meal.mealName}
+        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+        layout="fill"
+        objectFit="cover"
+      />
+
+      <div className="absolute right-2 top-2 flex gap-2">
+        <button
+          onClick={() => onAddToCart(meal)}
+          className="rounded-full bg-white p-2 shadow-md transition-all duration-200 hover:bg-gray-100 active:scale-95"
+          aria-label={`Add ${meal.mealName} to cart`}
+        >
+          <ShoppingCart className="h-5 w-5" />
+        </button>
+        <button
+          onClick={() => onLike(meal)}
+          className={`rounded-full bg-white p-2 shadow-md transition-all duration-200 hover:bg-gray-100 active:scale-95 
+            ${isLiked ? 'text-red-500' : 'text-gray-500'}
+            ${isPending ? 'animate-pulse' : ''}`}
+          disabled={isPending}
+          aria-label={isLiked ? `Unlike ${meal.mealName}` : `Like ${meal.mealName}`}
+        >
+          <Heart className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+    <CardHeader>
+      <CardTitle className="text-lg font-semibold">{meal.mealName}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm text-gray-500">{meal.category}</p>
+      <p className="mt-2 line-clamp-2 text-sm text-gray-600">{meal.description}</p>
+      <p className="mt-4 text-lg font-bold text-primary">₦{meal.price.toLocaleString()}</p>
+    </CardContent>
+  </Card>
+);
+
+// Main MenuLayout Component
 export default function MenuLayout() {
+  // Redux hooks
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const recentItems = useSelector((state) => state.auth.user?.recent || []);
-  
-  const [selectedType, setSelectedType] = useState('all');
-  const { meals, loading, error, fetchMeals } = useMeals(selectedType);
-  const [pendingLikes, setPendingLikes] = useState(new Set());
 
-  const handleLikeToggle = async (meal) => {
+  // Local state
+  const [selectedType, setSelectedType] = useState('all');
+  const [pendingLikes, setPendingLikes] = useState(new Set());
+  
+  // Custom hook for meals data
+  const { meals, loading, error } = useMeals(selectedType);
+
+  // Callbacks for user actions
+  const handleLikeToggle = useCallback(async (meal) => {
     if (!user?.username) {
       toast.error('Please log in to save favorites');
       return;
     }
 
-    setPendingLikes(prev => new Set([...prev, meal._id]));
+    setPendingLikes((prev) => new Set([...prev, meal._id]));
+
     try {
       await dispatch(toggleRecent(meal));
       toast.success(
-        isLiked(meal._id) 
+        isLiked(meal._id)
           ? 'Removed from favorites'
           : 'Added to favorites'
       );
+    } catch (error) {
+      console.error(error);
     } finally {
-      setPendingLikes(prev => {
+      setPendingLikes((prev) => {
         const updated = new Set(prev);
         updated.delete(meal._id);
         return updated;
       });
     }
-  };
+  }, [dispatch, user, isLiked]);
 
-  const isLiked = useCallback((mealId) => 
-    recentItems.some(item => item._id === mealId),
+  const isLiked = useCallback(
+    (mealId) => recentItems.some((item) => item._id === mealId),
     [recentItems]
   );
 
-  const renderMealCard = useCallback((meal) => {
-    const liked = isLiked(meal._id);
-    const isPending = pendingLikes.has(meal._id);
+    //eslint-disable-next-line
+  const handleAddToCart = useCallback((meal) => {
+    // Implement cart logic here
+ //   console.log('Adding to cart:', meal);
+  }, []);
 
-    return (
-      <Card 
-        key={meal._id}
-        className="card-menu group relative overflow-hidden transition-all duration-300 hover:shadow-lg"
-      >
-        <div className="card-menu relative h-48 w-full overflow-hidden">
-        <Image
-  src={meal.image}
-  alt={meal.mealName}
-  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-  layout="fill"
-  objectFit="cover"
-/>
-          <div className="absolute right-2 top-2 flex gap-2">
-            <button
-              onClick={() => handleAddToCart(meal)}
-              className="rounded-full bg-white p-2 shadow-md transition-all duration-200 hover:bg-gray-100 active:scale-95"
-              aria-label={`Add ${meal.mealName} to cart`}
-            >
-              <ShoppingCart className="h-5 w-5" />
-            </button>
-            <button
-              onClick={() => handleLikeToggle(meal)}
-              className={`rounded-full bg-white p-2 shadow-md transition-all duration-200 hover:bg-gray-100 active:scale-95 
-                ${liked ? 'text-red-500' : 'text-gray-500'}
-                ${isPending ? 'animate-pulse' : ''}`}
-              disabled={isPending}
-              aria-label={liked ? `Unlike ${meal.mealName}` : `Like ${meal.mealName}`}
-            >
-              <Heart className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">{meal.mealName}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-500">{meal.category}</p>
-          <p className="mt-2 line-clamp-2 text-sm text-gray-600">{meal.description}</p>
-          <p className="mt-4 text-lg font-bold text-primary">₦{meal.price.toLocaleString()}</p>
-        </CardContent>
-      </Card>
-    );
-  }, [handleLikeToggle, isLiked, pendingLikes]);
+  // Rendering helpers
+  const renderMealCard = useCallback((meal) => (
+    <MealCard
+      key={meal._id}
+      meal={meal}
+      onLike={handleLikeToggle}
+      isLiked={isLiked(meal._id)}
+      isPending={pendingLikes.has(meal._id)}
+      onAddToCart={handleAddToCart}
+    />
+  ), [handleLikeToggle, isLiked, pendingLikes, handleAddToCart]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -148,7 +183,7 @@ export default function MenuLayout() {
             <SelectValue placeholder="Select vendor type" />
           </SelectTrigger>
           <SelectContent>
-            {VENDOR_TYPES.map(type => (
+            {VENDOR_TYPES.map((type) => (
               <SelectItem key={type.value} value={type.value}>
                 {type.label}
               </SelectItem>

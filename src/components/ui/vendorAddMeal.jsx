@@ -111,7 +111,8 @@ const Menu = () => {
           <option value="Dinner Specials">Dinner Specials</option>
           <option value="Vegetarian Options">Vegetarian Options</option>
           <option value="Vegan Options">Vegan Options</option>
-          <option value="Kids' Meals">Kids' Meals</option>
+          <option value="Kid Meals">Kids Meals</option>
+
         </select>
         {formik.touched.category && formik.errors.category && (
           <p className="text-sm text-red-600 mt-1">{formik.errors.category}</p>
@@ -125,6 +126,11 @@ const Menu = () => {
           <span
             className={`w-10 h-5 flex items-center bg-${formik.values.inStock ? 'green' : 'gray'}-400 rounded-full p-1 cursor-pointer`}
             onClick={() => formik.setFieldValue('inStock', !formik.values.inStock)}
+            onKeyDown={(e) =>
+              e.key === formik.setFieldValue('inStock', !formik.values.inStock)
+            }
+            role="button"
+            tabIndex={0}
           >
             <span
               className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${

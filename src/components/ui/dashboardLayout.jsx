@@ -26,11 +26,11 @@ const Dashboard = () => {
   
   const router = useRouter();
   
-  console.log('isAuthenticated:', isAuthenticated);
-  console.log('Dashboard Render - Current User:', currentUser);
+//  console.log('isAuthenticated:', isAuthenticated);
+//  console.log('Dashboard Render - Current User:', currentUser);
 
   const [profilePicture, setProfilePicture] = useState(() => {
-    console.log('Initializing profile picture with:', currentUser?.profilePic || DEFAULT_IMAGE);
+  //  console.log('Initializing profile picture with:', currentUser?.profilePic || DEFAULT_IMAGE);
     return formatProfilePicPath(currentUser?.profilePic || DEFAULT_IMAGE);
   });
   
@@ -39,7 +39,7 @@ const Dashboard = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const validateImage = (file) => {
-    console.log('Validating image:', file.name, 'Size:', file.size, 'Type:', file.type);
+  //  console.log('Validating image:', file.name, 'Size:', file.size, 'Type:', file.type);
     
     if (file.size > MAX_FILE_SIZE) {
       throw new Error("Image must be less than 5MB");
@@ -55,13 +55,13 @@ const Dashboard = () => {
   //const token = currentUser.accessToken;
 
   const uploadImage = useCallback(async (file, token) => {
-    console.log('Starting image upload process');
+  //  console.log('Starting image upload process');
     const formData = new FormData();
     formData.append('profilePic', file);
     formData.append('userId', currentUser._id);
   
-    console.log('Token Here:', token);
-    console.log('Sending upload request to server');
+  //  console.log('Token Here:', token);
+  //  console.log('Sending upload request to server');
     const response = await fetch('/api/dashboard', {
       method: 'POST',
       headers: {
@@ -77,7 +77,7 @@ const Dashboard = () => {
     }
   
     const result = await response.json();
-    console.log('Upload successful:', result);
+  //  console.log('Upload successful:', result);
     return result;
   }, [currentUser._id]); // Add necessary dependencies like currentUser._id
   
@@ -85,7 +85,7 @@ const Dashboard = () => {
     const file = e.target.files[0];
     if (!file) return;
   
-    console.log('File selected:', file.name);
+  //  console.log('File selected:', file.name);
     setIsUploading(true);
     setUploadStatus("");
     setUploadBorderColor("");
@@ -95,18 +95,18 @@ const Dashboard = () => {
   
       // Create a temporary preview
       const previewUrl = URL.createObjectURL(file);
-      console.log('Preview URL created:', previewUrl);
+  //    console.log('Preview URL created:', previewUrl);
       setProfilePicture(previewUrl);
   
       const response = await uploadImage(file, currentUser.accessToken); // Now uses stable uploadImage
   
       // Update Redux store with the new image path
-      console.log('Updating Redux store with:', response.profilePic);
+  //    console.log('Updating Redux store with:', response.profilePic);
       dispatch(updateProfileImage(response.profilePic));
   
       // Update local state with the saved image path
       const formattedPath = formatProfilePicPath(response.profilePic);
-      console.log('Setting formatted profile picture path:', formattedPath);
+  //    console.log('Setting formatted profile picture path:', formattedPath);
       setProfilePicture(formattedPath);
   
       setUploadStatus("Image uploaded successfully!");
@@ -132,7 +132,7 @@ const Dashboard = () => {
   }, []);
   // Handlers
   const handleLogout = useCallback(() => {
-    console.log('User logging out');
+//    console.log('User logging out');
     ["user", "persist:user"].forEach((key) => localStorage.removeItem(key));
     dispatch(logoutUser());
     window.location.href = "/Login";

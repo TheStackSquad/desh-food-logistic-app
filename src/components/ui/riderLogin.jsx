@@ -11,12 +11,13 @@ import { loginVendorAction } from "@/reduxStore/actions/vendorActions";
 
 const RiderLoginForm = () => {
   const router = useRouter();
-  console.log('Form component rendered'); // Debug log
+//  console.log('Form component rendered'); // Debug log
   const dispatch = useDispatch();
 
+  //eslint-disable-next-line
   const vendorState = useSelector((state) => state);
     // Log entire Redux state
-    console.log('Full Redux State:', vendorState);
+//    console.log('Full Redux State:', vendorState);
 
   const initialValues = {
     email: '',
@@ -25,7 +26,7 @@ const RiderLoginForm = () => {
 
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log('Form submission started', values); // Debug log
+//    console.log('Form submission started', values); // Debug log
   
     try {
       // Correct the case of the API route
@@ -47,7 +48,7 @@ const RiderLoginForm = () => {
       refreshToken: data.refreshToken,
       sessionData: data.sessionData,
     };
-      console.log('DISPATCH DATA:', vendorData);
+//      console.log('DISPATCH DATA:', vendorData);
       
       dispatch(loginVendorAction(vendorData)); // Dispatch full vendorData
       
@@ -111,7 +112,12 @@ const RiderLoginForm = () => {
             Don&apos;t have an account?{' '}
 
               <span
-                onClick={() => router.push('/Vendor/Signup')}
+                onClick={() => router.push('/Rider/Signup')}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && router.push("/Rider/Signup")
+                }
+                role="button"
+                tabIndex={0}
                 className="text-blue-500 cursor-pointer hover:underline"
               >
                 Sign Up

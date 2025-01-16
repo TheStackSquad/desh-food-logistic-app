@@ -1,47 +1,47 @@
- // src/components/ui/vendorRegForm.js
- 'use client';
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
-import FormInput from '@/components/ui/FormInput';
+// src/components/ui/vendorRegForm.js
+"use client";
+import React from "react";
+import { Formik, Form } from "formik";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import FormInput from "@/components/ui/FormInput";
 
 const VendorSignUpForm = () => {
   const router = useRouter();
-  console.log('Form component rendered'); // Debug log
+//  console.log("Form component rendered"); // Debug log
 
   const initialValues = {
-    username: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: ''
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log('Form submission started', values); // Debug log
-  
+//    console.log("Form submission started", values); // Debug log
+
     try {
       // Correct the case of the API route
-      const response = await fetch('/api/vendorSignUp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/vendorSignUp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-  
+
       const data = await response.json();
-      console.log('API Response:', data); // Debug log
-      console.log('Raw response:', response); // Log the raw response for debugging
-  
+//      console.log("API Response:", data); // Debug log
+//      console.log("Raw response:", response); // Log the raw response for debugging
+
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || "Registration failed");
       }
-  
-      toast.success('Registration successful!');
+
+      toast.success("Registration successful!");
       resetForm();
-      router.push('/SignIn');
+      router.push("/SignIn");
     } catch (error) {
-      console.error('Registration error:', error); // Debug log
+      console.error("Registration error:", error); // Debug log
       toast.error(error.message);
     } finally {
       setSubmitting(false);
@@ -102,13 +102,18 @@ const VendorSignUpForm = () => {
                 disabled:bg-blue-300 disabled:cursor-not-allowed
               `}
             >
-              {isSubmitting ? 'Registering...' : 'Register'}
+              {isSubmitting ? "Registering..." : "Register"}
             </button>
 
             <p className="text-center text-gray-600 mt-4">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <span
-                onClick={() => router.push('/Vendor/Login')}
+                onClick={() => router.push("/Vendor/Login")}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && router.push("/Vendor/Login")
+                }
+                role="button"
+                tabIndex={0}
                 className="text-blue-500 cursor-pointer hover:underline"
               >
                 Sign in

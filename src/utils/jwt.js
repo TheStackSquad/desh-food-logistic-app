@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'your-refresh-secret';
 
 export const generateTokens = (userId) => {
-  console.log('Generating tokens for userId:', userId);
+//  console.log('Generating tokens for userId:', userId);
 
   const accessToken = jwt.sign(
     { userId },

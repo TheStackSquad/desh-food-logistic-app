@@ -82,9 +82,11 @@ export const addMenuItem = (menuItem) => async (dispatch, getState) => {
     // Extract vendor data from Redux state
     const { vendor } = getState();
     const vendorData = JSON.parse(vendor.vendorData);
+    
+    //eslint-disable-next-line
     const { accessToken, vendor: { id } } = vendorData;
 
-    console.log('Dispatching addMenuItem:', { menuItem, accessToken, id });
+//    console.log('Dispatching addMenuItem:', { menuItem, accessToken, id });
 
     // Make the API call
     const response = await axios.post('/api/add-menu', menuItem, {
@@ -99,7 +101,7 @@ export const addMenuItem = (menuItem) => async (dispatch, getState) => {
       payload: response.data,
     });
 
-    console.log('Successfully added menu item:', response.data);
+//    console.log('Successfully added menu item:', response.data);
   } catch (error) {
     console.error('Failed to add menu item:', error.response?.data || error.message);
   }

@@ -7,20 +7,20 @@ import { generateTokens } from '@/utils/jwt';
 import vendorLoginSchema from '@/schema/clientSchemas/vendorLoginSchema';
 
 export async function POST(req) {
-  console.log('[VendorLogin API]: POST request received');
+//  console.log('[VendorLogin API]: POST request received');
 
   try {
     await connectDB();
-    console.log('Database connection confirmed');
+  //  console.log('Database connection confirmed');
 
     // Parse the request body
     const { email, password } = await req.json();
-    console.log('[VendorLogin API]: Request body parsed:', { email });
+//    console.log('[VendorLogin API]: Request body parsed:', { email });
 
     // Validate input
     const body = { email, password };
     await vendorLoginSchema.validate(body, { abortEarly: false });
-    console.log('Validation successful');
+//    console.log('Validation successful');
 
     // Query database with timeout handling
     const vendor = await Promise.race([

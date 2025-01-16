@@ -8,7 +8,7 @@ import FormInput from '@/components/ui/FormInput';
 
 const RegistrationForm = () => {
   const router = useRouter();
-  console.log('Form component rendered'); // Debug log
+//  console.log('Form component rendered'); // Debug log
 
   const initialValues = {
     username: '',
@@ -21,7 +21,7 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log('Form submission started', values); // Debug log
+//    console.log('Form submission started', values); // Debug log
     
     try {
       const response = await fetch('/api/register', {
@@ -31,9 +31,9 @@ const RegistrationForm = () => {
       });
 
       const data = await response.json();
-      console.log('API Response:', data); // Debug log
+//      console.log('API Response:', data); // Debug log
         // Log the raw response for debugging
-      console.log('Raw response:', response);
+//      console.log('Raw response:', response);
 
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
@@ -64,42 +64,49 @@ const RegistrationForm = () => {
       >
         {({ isSubmitting }) => (
           <Form className="space-y-4">
+            <label htmlFor="text">Username</label>
             <FormInput
               label="Username"
               name="username"
               type="text"
               id="username"
             />
+            <label htmlFor="text">Address</label>
             <FormInput
               label="Email Address"
               name="email"
               type="email"
               id="email"
             />
+            <label htmlFor="tel">Phone Number</label>
             <FormInput
               label="Phone Number"
               name="phone"
               type="tel"
               id="phone"
             />
+            <label htmlFor="text">Delivery Address</label>
             <FormInput
               label="Delivery Address"
               name="address"
               type="text"
               id="address"
             />
+            <label htmlFor="password">City</label>
             <FormInput
               label="City/State"
               name="city"
               type="text"
               id="city"
             />
+            <label htmlFor="password">Password</label>
             <FormInput
               label="Password"
               name="password"
               type="password"
               id="password"
             />
+            <label htmlFor="password">Password</label>
             <FormInput
               label="Confirm Password"
               name="confirmPassword"
@@ -123,6 +130,11 @@ const RegistrationForm = () => {
               Already have an account?{' '}
               <span
                 onClick={() => router.push('/Login')}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && router.push("/Login")
+                }
+                role="button"
+                tabIndex={0}
                 className="text-blue-500 cursor-pointer hover:underline"
               >
                 Sign in

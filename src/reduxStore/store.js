@@ -9,17 +9,24 @@ import vendorReducer from '@/reduxStore/reducer/vendorReducer';
 // Create a custom storage for Next.js
 const createNoopStorage = () => {
   return {
+    //eslint-disable-next-line
     getItem(_key) {
+//      console.debug(`Attempt to get key: ${_key}`); // For development
       return Promise.resolve(null);
     },
+    //eslint-disable-next-line
     setItem(_key, value) {
+ //     console.debug(`Attempt to set key: ${_key} with value: ${value}`); // For development
       return Promise.resolve(value);
     },
+    //eslint-disable-next-line
     removeItem(_key) {
+ //     console.debug(`Attempt to remove key: ${_key}`); // For development
       return Promise.resolve();
     },
   };
 };
+
 
 // Initialize storage based on environment
 const storage = typeof window !== 'undefined' 

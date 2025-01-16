@@ -1,6 +1,6 @@
 //src/app/page.jsx
 'use client';
-import React, { useEffect } from 'react';  // Add useEffect import
+import React from 'react';  // Add useEffect import
 import HomePageLayout from '@/components/ui/homeLayout';
 import Snap from "@/components/Snap";
 import Ratings from '@/components/Ratings';

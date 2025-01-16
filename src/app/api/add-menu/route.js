@@ -10,7 +10,7 @@ export const POST = async (req, res) => {
     const { menuItem } = await req.json();
 
     // Debugging payload
-    console.log('POST request received with:', { id, accessToken, menuItem });
+//    console.log('POST request received with:', { id, accessToken, menuItem });
 
     // Authorization check
     if (!id || !accessToken) {
@@ -19,7 +19,7 @@ export const POST = async (req, res) => {
 
     const newMenuItem = await Meal.create(menuItem);
 
-    console.log('Menu item successfully created:', newMenuItem);
+//    console.log('Menu item successfully created:', newMenuItem);
     return res.status(201).json({ message: 'Menu item created successfully.', menuItem: newMenuItem });
   } catch (error) {
     console.error('Error creating menu item:', error);
@@ -35,7 +35,7 @@ export const PUT = async (req, res) => {
     const { menuItemId, updates } = await req.json();
 
     // Debugging payload
-    console.log('PUT request received with:', { id, accessToken, menuItemId, updates });
+//    console.log('PUT request received with:', { id, accessToken, menuItemId, updates });
 
     // Authorization check
     if (!id || !accessToken) {
@@ -51,7 +51,7 @@ export const PUT = async (req, res) => {
       return res.status(404).json({ error: 'Menu item not found.' });
     }
 
-    console.log('Menu item successfully updated:', updatedMenuItem);
+//    console.log('Menu item successfully updated:', updatedMenuItem);
     return res.status(200).json({ message: 'Menu item updated successfully.', menuItem: updatedMenuItem });
   } catch (error) {
     console.error('Error updating menu item:', error);
@@ -67,7 +67,7 @@ export const DELETE = async (req, res) => {
     const { menuItemId } = await req.json();
 
     // Debugging payload
-    console.log('DELETE request received with:', { id, accessToken, menuItemId });
+//    console.log('DELETE request received with:', { id, accessToken, menuItemId });
 
     // Authorization check
     if (!id || !accessToken) {
@@ -80,7 +80,7 @@ export const DELETE = async (req, res) => {
       return res.status(404).json({ error: 'Menu item not found.' });
     }
 
-    console.log('Menu item successfully deleted:', deletedMenuItem);
+//    console.log('Menu item successfully deleted:', deletedMenuItem);
     return res.status(200).json({ message: 'Menu item deleted successfully.', menuItem: deletedMenuItem });
   } catch (error) {
     console.error('Error deleting menu item:', error);

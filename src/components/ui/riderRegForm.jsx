@@ -8,7 +8,7 @@ import FormInput from '@/components/ui/FormInput';
 
 const RiderSignUpForm = () => {
   const router = useRouter();
-  console.log('Form component rendered'); // Debug log
+//  console.log('Form component rendered'); // Debug log
 
   const initialValues = {
     username: '',
@@ -19,7 +19,7 @@ const RiderSignUpForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log('Form submission started', values); // Debug log
+  //  console.log('Form submission started', values); // Debug log
   
     try {
       // Correct the case of the API route
@@ -30,8 +30,8 @@ const RiderSignUpForm = () => {
       });
   
       const data = await response.json();
-      console.log('API Response:', data); // Debug log
-      console.log('Raw response:', response); // Log the raw response for debugging
+ //     console.log('API Response:', data); // Debug log
+ //     console.log('Raw response:', response); // Log the raw response for debugging
   
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
@@ -109,7 +109,12 @@ const RiderSignUpForm = () => {
             <p className="text-center text-gray-600 mt-4">
               Already have an account?{' '}
               <span
-                onClick={() => router.push('/Vendor/Login')}
+                onClick={() => router.push('/Rider/Login')}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && router.push("/Rider/Login")
+                }
+                role="button"
+                tabIndex={0}
                 className="text-blue-500 cursor-pointer hover:underline"
               >
                 Sign in

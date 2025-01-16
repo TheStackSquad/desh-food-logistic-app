@@ -30,6 +30,7 @@ export async function POST(req) {
   }
 }
 
+//eslint-disable-next-line
 export async function GET(req) {
   try {
     // Here you would typically fetch messages from your database

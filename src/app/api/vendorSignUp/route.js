@@ -4,15 +4,15 @@ import Vendor from '@/schema/models/vendorSchemas/Vendor';
 import { hash } from 'bcryptjs';
 
 export async function POST(request) {
-  console.log('Vendor SignUp API route hit'); // Debug log
+//  console.log('Vendor SignUp API route hit'); // Debug log
 
   try {
     const body = await request.json();
-    console.log('Request body:', body); // Debug log
+//    console.log('Request body:', body); // Debug log
 
     // Connect to the database
     await dbConnect();
-    console.log('Database connected'); // Debug log
+//    console.log('Database connected'); // Debug log
 
     // Check if vendor already exists
     const existingVendor = await Vendor.findOne({
@@ -20,7 +20,7 @@ export async function POST(request) {
     });
 
     if (existingVendor) {
-      console.log('Vendor already exists:', existingVendor.email); // Debug log
+//      console.log('Vendor already exists:', existingVendor.email); // Debug log
       return NextResponse.json(
         { message: 'Vendor already exists' },
         { status: 400 }
@@ -29,9 +29,10 @@ export async function POST(request) {
 
     // Hash the password
     const hashedPassword = await hash(body.password, 12);
-    console.log('Password hashed'); // Debug log
+//    console.log('Password hashed'); // Debug log
 
     // Create a new vendor
+    //eslint-disable-next-line
     const vendor = await Vendor.create({
       username: body.username,
       email: body.email,
@@ -39,7 +40,7 @@ export async function POST(request) {
       password: hashedPassword,
     });
 
-    console.log('Vendor created:', vendor._id); // Debug log
+//    console.log('Vendor created:', vendor._id); // Debug log
 
     // Return success response
     return NextResponse.json(

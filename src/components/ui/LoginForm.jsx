@@ -17,7 +17,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log('Login attempt for:', username);
+//    console.log('Login attempt for:', username);
 
     try {
       const response = await fetch('/api/login', {
@@ -27,7 +27,7 @@ const LoginForm = () => {
       });
 
       const data = await response.json();
-      console.log('Login response:', data);
+//      console.log('Login response:', data);
 
       if (data.success) {
         // Prepare user data for Redux

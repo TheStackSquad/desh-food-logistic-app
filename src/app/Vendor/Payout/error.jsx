@@ -1,6 +1,7 @@
 // src/app/Vendor/Payout/error.jsx
 'use client';
 
+//eslint-disable-next-line
 export default function Error({ error, reset }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">

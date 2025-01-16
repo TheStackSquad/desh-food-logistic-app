@@ -1,14 +1,15 @@
 //src/components/ui/vendorInsightLayout.jsx
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { 
-  Filter, 
-  ExternalLink, 
-  ChevronDown, 
+import React, { useState } from "react";
+import {
+  Filter,
+  ExternalLink,
+  //  ChevronDown,
   Star,
-  ChevronUp
-} from 'lucide-react';
+  ChevronIcon,
+  //  ChevronUp
+} from "lucide-react";
 
 const StatCard = ({ label, value }) => (
   <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
@@ -18,16 +19,16 @@ const StatCard = ({ label, value }) => (
 );
 
 const VendorInsight = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeFilter, setActiveFilter] = useState("All");
   const [isPopularItemsExpanded, setIsPopularItemsExpanded] = useState(false);
 
   const stats = [
-    { label: 'Total Orders', value: '0' },
-    { label: 'Total Amount', value: '₦0' },
-    { label: 'Average Order Amount', value: '₦0' },
+    { label: "Total Orders", value: "0" },
+    { label: "Total Amount", value: "₦0" },
+    { label: "Average Order Amount", value: "₦0" },
   ];
 
-  const ratings = ['All', '5 Star', '4 Star', '3 Star', '2 Star', '1 Star'];
+  const ratings = ["All", "5 Star", "4 Star", "3 Star", "2 Star", "1 Star"];
 
   return (
     <div className="insightGrid min-h-screen bg-gray-50 p-6">
@@ -45,23 +46,41 @@ const VendorInsight = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {stats.map((stat) => (
-              <StatCard key={stat.label} label={stat.label} value={stat.value} />
+              <StatCard
+                key={stat.label}
+                label={stat.label}
+                value={stat.value}
+              />
             ))}
           </div>
         </section>
 
         {/* Popular Items Section */}
         <section className="bg-white rounded-xl shadow-md p-6">
-          <div className="flex justify-between items-center cursor-pointer"
-               onClick={() => setIsPopularItemsExpanded(!isPopularItemsExpanded)}>
-            <h2 className="text-xl font-semibold text-gray-800">Most Popular Items</h2>
-            <button className="text-gray-600 hover:text-gray-900 transition-colors">
-              {isPopularItemsExpanded ? 
-                <ChevronUp className="w-6 h-6" /> : 
-                <ChevronDown className="w-6 h-6" />
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => setIsPopularItemsExpanded(!isPopularItemsExpanded)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setIsPopularItemsExpanded(!isPopularItemsExpanded);
               }
-            </button>
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isPopularItemsExpanded}
+          >
+            <h2 className="text-xl font-semibold text-gray-800">
+              Most Popular Items
+            </h2>
+            <>
+              {/* Correct comment inside braces */}
+              <span>
+                {/* Another comment */}
+                <ChevronIcon isExpanded={isPopularItemsExpanded} />
+              </span>
+            </>
           </div>
+
           {isPopularItemsExpanded && (
             <div className="mt-4">
               {/* Popular items content would go here */}
@@ -94,9 +113,9 @@ const VendorInsight = () => {
             <div className="text-center">
               <div className="flex items-center gap-2 mb-2">
                 {[...Array(5)].map((_, i) => (
-                  <Star 
-                    key={i} 
-                    className="w-6 h-6 text-yellow-400 fill-current" 
+                  <Star
+                    key={i}
+                    className="w-6 h-6 text-yellow-400 fill-current"
                   />
                 ))}
                 <span className="ml-2 text-lg font-semibold">0.0</span>
@@ -112,11 +131,11 @@ const VendorInsight = () => {
                 onClick={() => setActiveFilter(rating)}
                 className={`px-4 py-2 rounded-lg transition-all duration-200 ${
                   activeFilter === rating
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
-                {rating} {rating !== 'All' && '(0)'}
+                {rating} {rating !== "All" && "(0)"}
               </button>
             ))}
           </div>

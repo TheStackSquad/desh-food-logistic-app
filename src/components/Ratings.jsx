@@ -4,6 +4,7 @@ import React from "react";
 import RestaurantCard from "@/components/RestaurantCard";
 
 const Restaurant = () => {
+  //eslint-disable-next-line
   const [restaurants, setRestaurants] = React.useState([
     { id: 1, name: "Joe's Diner", ratings: [5, 5, 5, 4, 5] },
     { id: 2, name: "Pizza Palace", ratings: [2, 2, 2, 2, 5] },

@@ -1,49 +1,56 @@
-//src/components/chatWidget.jsx
-
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader } from 'lucide-react';
-import { chatIconAnimation,
-    chatWidgetAnimation,
-    messageAnimation,
-    typingAnimation } from '@/components/motion/animations';
-import ChatMessage,
-{ ChatSession } from '@/schema/models/chatModel';
+import { MessageCircle, X, Send } from 'lucide-react';
+import {
+  chatIconAnimation,
+  chatWidgetAnimation,
+  messageAnimation,
+  typingAnimation
+} from '@/components/motion/animations';
+import ChatMessage, { ChatSession } from '@/schema/models/chatModel';
 
 const ChatWidget = ({ isVisible, onClose }) => {
+  // State
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [chatState, setChatState] = useState(ChatSession.CLOSED);
+  
+  // Refs
   const messageEndRef = useRef(null);
-  const inactivityTimer = useRef(null);
+  const inactivityTimeoutRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    if (isVisible) {
-      resetInactivityTimer();
+  // Utility functions
+  const clearInactivityTimer = useCallback(() => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
     }
-    return () => clearTimeout(inactivityTimer.current);
-  }, [isVisible]);
+  }, []);
 
-  const resetInactivityTimer = () => {
-    clearTimeout(inactivityTimer.current);
-    inactivityTimer.current = setTimeout(() => {
+  const startInactivityTimer = useCallback(() => {
+    clearInactivityTimer();
+    inactivityTimeoutRef.current = setTimeout(() => {
       if (chatState !== ChatSession.ACTIVE) {
         onClose();
       }
     }, 10000);
-  };
+  }, [chatState, onClose, clearInactivityTimer]);
 
+  // Effects
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
+    if (isVisible) {
+      startInactivityTimer();
+    }
+    return () => clearInactivityTimer();
+  }, [isVisible, startInactivityTimer, clearInactivityTimer]);
+
+  // Event handlers
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -72,6 +79,12 @@ const ChatWidget = ({ isVisible, onClose }) => {
     }, 1500);
   };
 
+  const handleInputChange = (e) => {
+    setNewMessage(e.target.value);
+    startInactivityTimer();
+  };
+
+  // Sub-components
   const ChatIcon = () => (
     <motion.div
       className="fixed bottom-6 left-6 z-50"
@@ -149,7 +162,7 @@ const ChatWidget = ({ isVisible, onClose }) => {
           <input
             type="text"
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={handleInputChange}
             placeholder="Type your message..."
             className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />

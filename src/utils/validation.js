@@ -16,7 +16,7 @@ export const debounce = (func, wait) => {
 
 // Validate single field with debounce
 export const debouncedValidateField = debounce(async (fieldName, value, setFieldError) => {
-  console.log(`Debounced validation for ${fieldName}`); // Debug log
+//  console.log(`Debounced validation for ${fieldName}`); // Debug log
   const result = await validateField(fieldName, value);
   if (!result.isValid) {
     setFieldError(fieldName, result.error);
@@ -25,14 +25,14 @@ export const debouncedValidateField = debounce(async (fieldName, value, setField
 
 // Format phone number
 export const formatPhoneNumber = (value) => {
-  console.log('Formatting phone number:', value); // Debug log
+//  console.log('Formatting phone number:', value); // Debug log
   const numbers = value.replace(/\D/g, '');
   return numbers.slice(0, 10);
 };
 
 // Check password strength
 export const checkPasswordStrength = (password) => {
-  console.log('Checking password strength'); // Debug log
+//  console.log('Checking password strength'); // Debug log
   const strengthChecks = {
     length: password.length >= 8,
     hasUpperCase: /[A-Z]/.test(password),
@@ -51,7 +51,7 @@ export const checkPasswordStrength = (password) => {
 
 // Generate username suggestions
 export const generateUsernameSuggestions = (username) => {
-  console.log('Generating username suggestions for:', username); // Debug log
+//  console.log('Generating username suggestions for:', username); // Debug log
   const suggestions = [
     `${username}${Math.floor(Math.random() * 100)}`,
     `${username}_${Math.floor(Math.random() * 100)}`,

@@ -13,18 +13,20 @@ import {
   Star,
   Calendar,
   MapPin,
-  ChevronRight,
-  DollarSign
+  ChevronRight
 } from 'lucide-react';
 import Image from 'next/image';
 
 const RiderDashboard = () => {
+  //eslint-disable-next-line
   const [notifications, setNotifications] = useState(3);
+    //eslint-disable-next-line
   const [earnings, setEarnings] = useState({
     today: 85.50,
     week: 534.25,
     month: 2150.00
   });
+  //eslint-disable-next-line
   const [stats, setStats] = useState({
     completedRides: 145,
     rating: 4.8,
@@ -108,8 +110,9 @@ const RiderDashboard = () => {
           className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-600">Today's Earnings</h3>
-            <DollarSign className="text-green-500" size={20} />
+          <h3 className="text-gray-600">Today&#39;s Earnings</h3>
+            <span className="text-green-500 text-lg">₦</span>
+
           </div>
           <p className="text-3xl font-bold text-gray-900">₦{earnings.today.toFixed(2)}</p>
           <div className="mt-2 text-sm text-gray-500">From 12 deliveries</div>

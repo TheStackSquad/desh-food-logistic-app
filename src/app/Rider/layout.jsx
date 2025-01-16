@@ -9,7 +9,7 @@ import {
     UserPlus, 
     LogIn, 
     User,  
-    BarChart2, 
+  //  BarChart2, 
     Gauge 
   } from "lucide-react";
   

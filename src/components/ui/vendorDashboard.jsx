@@ -7,9 +7,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // Redux Actions
+//eslint-disable-next-line
 import { logoutVendor, deleteMenuItem, updateMenuItem } from "@/reduxStore/actions/vendorActions";
 
 // UI Components
+//eslint-disable-next-line
 import { DashboardCard, DashboardCardContent, DashboardWrap, Modal } from "@/components/ui/dashboardCard";
 
 const DEFAULT_PROFILE_IMAGE = "/uploads/dashboardDefault/drgnimages.jpeg"; // Adjust path as needed
@@ -32,7 +34,7 @@ const VendorDashboard = () => {
 
   useEffect(() => {
     if (!vendorData) {
-      console.log("No vendor data found");
+  //    console.log("No vendor data found");
       return;
     }
 

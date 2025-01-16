@@ -16,7 +16,7 @@ import Image from 'next/image';
 export default function VendorProfileLayout() {
   const dispatch = useDispatch();
   const { vendorData, isAuthenticated } = useSelector(state => state.vendor);
-  console.log('isAuthenticated:', isAuthenticated);
+//  console.log('isAuthenticated:', isAuthenticated);
   const [profilePreview, setProfilePreview] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
   const [uploadStatus, setUploadStatus] = useState({
