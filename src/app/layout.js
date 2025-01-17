@@ -26,23 +26,23 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@YourTwitterHandle',
-    creator: '@YourTwitterHandle',
+    site: '@https://x.com/ConceiveXCreate',
+    creator: '@ConceiveXCreate',
     title: 'DevKitchen - Discover Your Next Meal',
     description: 'Your kitchen marketplace for recipes and ingredients.',
     image: 'https://yourapp.com/assets/images/twitter-card.jpg',
   },
   authors: [
     {
-      name: 'Your Name',
+      name: 'Desheye',
       url: 'https://linkedin.com/in/your-profile',
     },
   ],
   additionalLinks: {
-    github: 'https://github.com/your-username',
-    linkedin: 'https://linkedin.com/in/your-profile',
+    github: 'https://github.com/TheStackSquad/food-delivery-app',
+    linkedin: 'https://www.linkedin.com/in/adesheye/',
     facebook: 'https://facebook.com/your-page',
-    instagram: 'https://instagram.com/your-handle',
+    threads: 'https://www.threads.net/@orunmiller',
   },
 };
 
