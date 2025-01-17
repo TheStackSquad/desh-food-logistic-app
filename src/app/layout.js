@@ -1,6 +1,7 @@
+//src/app/layout.js
 import { Suspense } from 'react';
 import ClientProviders from '@/app/ClientProviders';
-import Header from '@/components/Navbar';
+import { ClientHeader } from '@/debugLibrary/clientHeader';
 import '@/app/globals.css';
 
 // Metadata for SEO and Social Media
@@ -45,7 +46,6 @@ export const metadata = {
   },
 };
 
-
 // Preload Fonts
 const fonts = [
   {
@@ -58,7 +58,14 @@ const fonts = [
   },
 ];
 
+// Conditionally import only in browser (for axe and whyDidYouRender setup)
+if (typeof window !== "undefined") {
+  import("@/debugLibrary/axe");
+}
+
+
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <head>
@@ -74,12 +81,12 @@ export default function RootLayout({ children }) {
         ))}
       </head>
       <body>
-        <ClientProviders>
-        <Header />
-          <Suspense fallback={<div className="suspenseLoading">Loading...</div>}>
-            {children}
-          </Suspense>
-        </ClientProviders>
+          <ClientProviders>
+          <ClientHeader />
+            <Suspense fallback={<div className="suspenseLoading">Loading...</div>}>
+              {children}
+            </Suspense>
+          </ClientProviders>
       </body>
     </html>
   );

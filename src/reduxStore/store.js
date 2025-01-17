@@ -1,39 +1,31 @@
-// src/reduxStore/store.js
-'use client';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import { createLogger } from 'redux-logger';
 import authReducer from '@/reduxStore/reducer/authReducer';
 import vendorReducer from '@/reduxStore/reducer/vendorReducer';
 
-// Create a custom storage for Next.js
-const createNoopStorage = () => {
-  return {
-    //eslint-disable-next-line
-    getItem(_key) {
-//      console.debug(`Attempt to get key: ${_key}`); // For development
+// Create a storage object that wraps localStorage methods
+const storage = {
+  getItem: (key) => {
+    if (typeof window === 'undefined') {
       return Promise.resolve(null);
-    },
-    //eslint-disable-next-line
-    setItem(_key, value) {
- //     console.debug(`Attempt to set key: ${_key} with value: ${value}`); // For development
-      return Promise.resolve(value);
-    },
-    //eslint-disable-next-line
-    removeItem(_key) {
- //     console.debug(`Attempt to remove key: ${_key}`); // For development
+    }
+    return Promise.resolve(localStorage.getItem(key));
+  },
+  setItem: (key, item) => {
+    if (typeof window === 'undefined') {
       return Promise.resolve();
-    },
-  };
+    }
+    return Promise.resolve(localStorage.setItem(key, item));
+  },
+  removeItem: (key) => {
+    if (typeof window === 'undefined') {
+      return Promise.resolve();
+    }
+    return Promise.resolve(localStorage.removeItem(key));
+  }
 };
 
-
-// Initialize storage based on environment
-const storage = typeof window !== 'undefined' 
-  ? createWebStorage('local')
-  : createNoopStorage();
-
-// Persist configurations
 const authPersistConfig = {
   key: 'auth',
   storage,
@@ -49,30 +41,13 @@ const vendorPersistConfig = {
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const persistedVendorReducer = persistReducer(vendorPersistConfig, vendorReducer);
 
-// Logger setup with better Next.js compatibility
-const createMiddleware = () => {
-  const middleware = [];
-  
-  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
-    const { createLogger } = require('redux-logger');
-    const logger = createLogger({
-      collapsed: true,
-      timestamp: true,
-      colors: {
-        title: () => '#139BFE',
-        prevState: () => '#9E9E9E',
-        action: () => '#149945',
-        nextState: () => '#A47104',
-        error: () => '#ff0005',
-      },
-    });
-    middleware.push(logger);
-  }
-  
-  return middleware;
-};
+// Logger setup for development mode
+const logger = createLogger({ collapsed: true });
+const middleware = [];
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(logger);
+}
 
-// Configure store
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
@@ -83,7 +58,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(createMiddleware()),
+    }).concat(middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

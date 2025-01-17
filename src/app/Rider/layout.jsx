@@ -3,13 +3,11 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import '@/styles/componentStyle/layout.css';
 
 import { 
     UserPlus, 
     LogIn, 
     User,  
-  //  BarChart2, 
     Gauge 
   } from "lucide-react";
   

@@ -7,9 +7,8 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import navItems from "@/components/objects/uiData";
 import { navVariants, menuVariants } from "@/components/motion/dropdown";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,18 +24,18 @@ const Header = () => {
 
     if (isOpen) {
       document.addEventListener("click", handleClickOutside);
-    } else {
-      document.removeEventListener("click", handleClickOutside);
     }
-
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isOpen]);
 
   return (
-    <div className="header bg-transparent">
-      <div className="header-container nav-container bg-transparent">
+    <>
+      <div className="header-container nav-container">
         <div className="nav-wrapper flex items-center gap-4">
-          <Link href="/" className="logo text-lg font-bold border border-gray-300 rounded-lg px-3 py-1 shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
+          <Link
+            href="/"
+            className="logo text-lg font-bold border border-gray-300 rounded-lg px-3 py-1 shadow-md hover:shadow-lg transition-transform transform hover:scale-105"
+          >
             devKitchen
           </Link>
         </div>
@@ -83,31 +82,36 @@ const Header = () => {
         </div>
       </div>
 
-      <motion.div
-        initial="closed"
-        animate={isOpen ? "open" : "closed"}
-        variants={menuVariants}
-        className="mobile-dropdown bg-white shadow-lg rounded-lg p-4 absolute right-4 top-16 w-64 z-50"
-        ref={dropdownRef}
-      >
-        <motion.div variants={navVariants} className="mobile-nav-links space-y-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.path}
-              className={`mobile-nav-link flex items-center justify-start gap-2 text-gray-700 hover:text-blue-500 transition-colors ${pathname === item.path ? "font-bold" : ""}`}
-              onClick={() => setIsOpen(false)}
-            >
-              <span className="text-lg" style={{ color: item.color }}>
-                {item.icon.dev}
-              </span>
-              <span>{item.name}</span>
-            </Link>
-          ))}
+      {isOpen && (
+        <motion.div
+          initial="closed"
+          animate={isOpen ? "open" : "closed"}
+          variants={menuVariants}
+          className="mobile-dropdown bg-white shadow-lg rounded-lg p-4 absolute right-4 top-16 w-64 z-50"
+          ref={dropdownRef}
+        >
+          <motion.div variants={navVariants} className="mobile-nav-links space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.path}
+                className={`mobile-nav-link flex items-center justify-start gap-2 text-gray-700 hover:text-blue-500 transition-colors ${
+                  pathname === item.path ? "font-bold" : ""
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <span className="text-lg" style={{ color: item.color }}>
+                  {item.icon.dev}
+                </span>
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
+      )}
+    </>
   );
 };
 
 export default Header;
+
