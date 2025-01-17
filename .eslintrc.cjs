@@ -9,6 +9,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "next/core-web-vitals",
+    "plugin:redux-saga/recommended"
   ],
   parserOptions: {
     ecmaVersion: 2020,

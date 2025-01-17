@@ -1,5 +1,6 @@
 //src/app/Login/page.js
 'use client'
+
 import LoginForm from '@/components/ui/LoginForm';
 
 export default function Login() {

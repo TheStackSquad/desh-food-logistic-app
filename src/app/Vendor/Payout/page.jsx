@@ -3,7 +3,7 @@
   
   import { Suspense } from "react";
   import dynamic from "next/dynamic";
-  import { useCurrentTime } from '@/app/Vendor/Payout/hooks/useCurrentTime';
+  import { useCurrentTime } from '@/app/hooks/useCurrentTime';
   
   // Dynamic imports with custom loading states
   const VendorHeader = dynamic(() => import("@/app/Vendor/Payout/components/VendorHeader"), {

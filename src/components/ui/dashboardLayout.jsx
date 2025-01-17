@@ -3,16 +3,13 @@
 'use client'
 import React, { useState, useCallback } from "react";
 import Image from 'next/image';
-import { FaCamera,
-  FaSignOutAlt
-} from "react-icons/fa";
+import { Camera, LogOut } from 'lucide-react';
 import { useDispatch, useSelector } from "react-redux";
 import { formatProfilePicPath } from "@/utils/pathFormatter";
 import { updateProfileImage,
   logoutUser
  } from "@/reduxStore/actions/authActions";
  import { useRouter } from 'next/navigation';
-import styles from "@/styles/uiStyle/dashboard.module.css";
 
 
 // Define default image with proper path
@@ -21,8 +18,9 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const currentUser = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth?.isAuthenticated || false);
+const currentUser = useSelector((state) => state.auth?.user || {});
+
   
   const router = useRouter();
   
@@ -157,50 +155,51 @@ const Dashboard = () => {
   }
   // Modified Image component with proper error handling
   return (
-    <div className={styles.dashboardContainer}>
-      <div className={styles.profileSection}>
-        <div className={styles.profileImageWrap}>
-          <Image
-            src={profilePicture}
-            alt={`${currentUser.username}'s profile`}
-            width={150}
-            height={150}
-            className={styles.profileImage}
-            style={{
-              border: uploadBorderColor ? `3px solid ${uploadBorderColor}` : '3px solid transparent',
-              transition: 'border-color 0.3s ease'
-            }}
-            onError={handleImageError}
-            priority
+    <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+    {/* Profile Section */}
+    <div className="flex flex-col items-center mb-6">
+      <div className="relative">
+        <Image
+          src={profilePicture}
+          alt={`${currentUser.username}'s profile`}
+          width={150}
+          height={150}
+          className={`rounded-full border-4 transition-colors ${uploadBorderColor ? `border-${uploadBorderColor}` : 'border-transparent'}`}
+          onError={handleImageError}
+          priority
+        />
+        <label htmlFor="fileUpload" className="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow-lg cursor-pointer hover:bg-gray-100">
+          <input
+            type="file"
+            id="fileUpload"
+            hidden
+            accept="image/jpeg,image/jpg,image/png,image/webp"
+            onChange={handleFileChange}
+            disabled={isUploading}
           />
-          <label htmlFor="fileUpload" className={styles.cameraIcon}>
-            <input
-              type="file"
-              id="fileUpload"
-              hidden
-              accept="image/jpeg,image/jpg,image/png,image/webp"
-              onChange={handleFileChange}
-              disabled={isUploading}
-            />
-            <FaCamera />
-          </label>
-        </div>
-        <h2 className={styles.userName}>
-          {`Hi ${currentUser.username}`}
-        </h2>
-        {uploadStatus && (
-          <p className={`${styles.uploadStatus} ${
-            uploadBorderColor === 'green' ? styles.success : styles.error
-          }`}>
-            {uploadStatus}
-          </p>
-        )}
+          <Camera className="text-gray-600" />
+        </label>
       </div>
+      <h2 className="mt-4 text-xl font-semibold text-gray-800">
+        {`Hi, ${currentUser.username}`}
+      </h2>
+      {uploadStatus && (
+        <p className={`mt-2 text-sm font-medium ${uploadBorderColor === 'green' ? 'text-green-600' : 'text-red-600'}`}>
+          {uploadStatus}
+        </p>
+      )}
+    </div>
 
-      <button onClick={handleLogout} className={styles.logoutButton}>
-        <FaSignOutAlt /> Logout
+    {/* Logout Button */}
+    <div className="text-center">
+      <button
+        onClick={handleLogout}
+        className="flex items-center justify-center px-4 py-2 bg-red-500 text-white font-semibold rounded shadow-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+      >
+        <LogOut className="mr-2" /> Logout
       </button>
     </div>
+  </div>
   );
 };
 

@@ -5,6 +5,8 @@ import { Formik, Form } from 'formik';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import FormInput from '@/components/ui/FormInput';
+
+  //eslint-disable-next-line
 import { useDispatch, useSelector } from "react-redux";
 import { loginVendorAction } from "@/reduxStore/actions/vendorActions";
 
@@ -15,7 +17,6 @@ const RiderLoginForm = () => {
   const dispatch = useDispatch();
 
   //eslint-disable-next-line
-  const vendorState = useSelector((state) => state);
     // Log entire Redux state
 //    console.log('Full Redux State:', vendorState);
 

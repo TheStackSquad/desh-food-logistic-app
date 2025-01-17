@@ -1,4 +1,7 @@
 //src/app/Menu/page.js
+'use client';
+
+export const dynamic = 'force-dynamic';
 
 import MenuUI from '@/components/ui/MenuLayout';
 

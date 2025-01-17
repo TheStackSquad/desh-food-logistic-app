@@ -5,9 +5,8 @@ import React, { useState } from "react";
 import {
   Filter,
   ExternalLink,
-  //  ChevronDown,
+  ChevronDown,
   Star,
-  ChevronIcon,
   //  ChevronUp
 } from "lucide-react";
 
@@ -76,7 +75,8 @@ const VendorInsight = () => {
               {/* Correct comment inside braces */}
               <span>
                 {/* Another comment */}
-                <ChevronIcon isExpanded={isPopularItemsExpanded} />
+              <ChevronDown isexpanded={isPopularItemsExpanded.toString()} />
+
               </span>
             </>
           </div>
