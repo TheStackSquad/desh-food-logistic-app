@@ -244,3 +244,16 @@ contact css */
   width: 95%;
   padding: var(--paddingRegular);
 }
+
+@media (max-width: 576px){
+  .navGrid{
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px){
+  .navGrid2{
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #f0f4ff, #dfefff, #ffffff);
+  }
+}

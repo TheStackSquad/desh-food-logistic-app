@@ -59,12 +59,12 @@ export default function VendorLayout({ children }) {
   return (
     <div className="flex min-h-screen">
       {/* Main content area */}
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main className="navGrid flex-1 p-6 overflow-y-auto">
         {children}
       </main>
 
       {/* Navigation sidebar */}
-      <nav className="navGrid fixed bottom-0 left-0 right-0 bg-white border-t md:relative md:w-64 md:border-t-0 md:border-l">
+      <nav className="navGrid2 fixed bottom-0 left-0 right-0 bg-white border-t md:relative md:w-64 md:border-t-0 md:border-l">
         <ul className="flex md:flex-col p-2 space-x-4 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-visible">
           {navigation.map((item) => {
             const Icon = item.icon;
