@@ -30,7 +30,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="header-container nav-container">
+      <div className="header-container fixed top-0 left-0 right-0 z-50">
         <div className="nav-wrapper flex items-center gap-4">
           <Link
             href="/"
@@ -75,7 +75,7 @@ const Header = () => {
               <FontAwesomeIcon
                 icon={faShoppingCart}
                 size="lg"
-                className="text-gray-700 hover:text-gray-900 transition-colors"
+                className="cartIcon text-gray-700 hover:text-gray-900 transition-colors"
               />
             </Link>
           </div>
@@ -90,7 +90,10 @@ const Header = () => {
           className="mobile-dropdown bg-white shadow-lg rounded-lg p-4 absolute right-4 top-16 w-64 z-50"
           ref={dropdownRef}
         >
-          <motion.div variants={navVariants} className="mobile-nav-links space-y-2">
+          <motion.div
+            variants={navVariants}
+            className="mobile-nav-links space-y-2"
+          >
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -114,4 +117,3 @@ const Header = () => {
 };
 
 export default Header;
-
